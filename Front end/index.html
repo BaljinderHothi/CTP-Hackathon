@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Canvas</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const canvasWidth = 1920;
+        const canvasHeight = 1080;
+        
+    
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        
+        
+        const canvasState = [];
+
+        
+        function renderCanvas() {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            for (const cell of canvasState) {
+                const { x, y, imageSrc } = cell;
+                const image = new Image();
+                image.src = imageSrc;
+                image.onload = () => {
+                    ctx.drawImage(image, x, y);
+                };
+            }
+        }
+
+       
+
+
+            canvasState.push({ x, y, imageSrc });
+            renderCanvas();
+        
+       
+        renderCanvas();
+    </script>
+</body>
+</html>
