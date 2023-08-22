@@ -1,3 +1,3 @@
 # CTP-Hackathon
 
-This is a simple test of pull requests and merging them
+This was merged to main from the test branch
