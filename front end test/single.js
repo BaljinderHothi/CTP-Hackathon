@@ -10,17 +10,22 @@ let img = new Image();
 let currentX = canvas_width / 2, currentY = canvas_height / 2;
 let isDragging = false;
 let offsetX, offsetY;
+let imgX, imgY; // send these variables to data base if someone clicks submit , use temp submit button
 
 function clearCanvas() {
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.clearRect(0, 0, canvas.width, canvas.height); 
+    // run for loop of data
+    //c.drawImage('backdrop.jpg',0,0,30,50);
 }
 
 function handleImage(e) {
-    img.src = URL.createObjectURL(e.target.files[0]);
+    img.src = "backdrop.jpg"; // change how you input src
+    console.log(e.target.files[0]);
+    console.log(img.src);
 
     img.onload = function () {
         clearCanvas();
-        c.drawImage(img, currentX, currentY, 400, 300);
+        c.drawImage(img, currentX, currentY, 100, 100);
         makeDraggable();
     };
 }
@@ -43,11 +48,15 @@ function makeDraggable() {
             currentX = e.clientX - offsetX;
             currentY = e.clientY - offsetY;
             clearCanvas();
-            c.drawImage(img, currentX, currentY, 400, 300);
+            imgX = currentX;
+            imgY = currentY;
+            c.drawImage(img, currentX, currentY, 100, 100);
         }
     }
 
     canvas.onmouseup = () => {
+        console.log(imgX, imgY);
+        document.getElementById("change").innerHTML = `X Coordinate: ${imgX}, Y Coordinate: ${imgY}`;
         isDragging = false;
     }
 
