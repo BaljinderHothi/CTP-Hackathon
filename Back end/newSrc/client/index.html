@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Canvas</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+        #board{
+            border: 40px solid #575050;
+            background:linear-gradient(45deg, pink 30%, lightblue);
+            width: 90%;
+            height: 90%;
+            box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            /*
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;*/
+        }
+        .bottom-bar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 8vh;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2vh;
+        }
+
+        #menuLink {
+            color: rgb(187, 148, 250);
+            text-decoration: none;
+        }
+        img{
+            position: relative;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js">//load socket.io</script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js">//load jquery</script>
+</head>
+
+<body>
+    <div id="board">
+    </div>
+    <div class="bottom-bar">
+        <form id="userimg" enctype="multipart/form-data" method="post"><!--attribues for form are required!!!!-->
+            <input type="file" accept="image/*" id="img" name="img-uploaded" required> <!--name of "img-uploaded" is required!!!!-->
+            <input type="number" id="xloc" class="text-box" name="xloc" placeholder="x-location" required min="0" max="1910">
+            <input type="number" id="yloc" class="text-box" name="yloc" placeholder="y-location" required min="0" max="1070">
+            <button type="submit" id="addImg" name="addImg">Submit</button>
+        </form>
+        <a href="#" id="menuLink">Menu</a><br/>
+        <p id='change'> Latest Canvas</p>
+    </div>
+    
+    <!-- Pop-up Container -->
+    <div id="popupContainer" class="popup">
+        <div class="popup-content">
+            <!-- Code to submit and select images goes here -->
+            <form id="popupForm">
+                <!-- buttons or anything else we add etc. -->
+            </form>
+        </div>
+    </div>
+    
+    <script src="single.js" async defer></script>
+    
+    <script>//DO NOT CHANGE UNLESS NEEDED TO!!!!
+        //socket script
+        const socket = io();//instantiate the io() object as socket...
+
+        socket.on('connect', () => {
+            console.log(`session id: ${socket.id}`);
+            //we want to load the data on the connection
+        });
+
+        socket.on('canvasLocs', (incoming)=> {//loading into page
+                //need to populate the object
+                //incoming is an array with multiple objects
+                //the objects follow the structure of 
+                /*
+                {
+                    __id:Object(id)//dont worry about this id
+                    x: "some string representation of the x coordinate",
+                    y: "some string representation of the y coordinate",
+                    heigh: "some string representation of the image height",
+                    width: "some string representation of the  coordinate",
+                    img: "/src/img/someImgage.png" //NOT IMPLEMENTED YET
+                }
+                */
+               for(let i = 0; i < incoming.length; i++){
+                console.log(incoming[i].img, incoming[i].x, incoming[i].y);
+                let img = document.createElement('img');
+                img.src = `uploads/${incoming[i].img}`;
+                img.style.left = `${Number(incoming[i].x)}px`;
+                img.style.top = `${Number(incoming[i].y)}px`;
+                document.getElementById('board').appendChild(img);
+                //document.body.append(img);
+                // incoming
+               }
+                //socket.emit('loaded', `X:${incoming[i].x}, Y:${incoming[i].y}`)
+        });
+
+        $('#userimg').submit(() => {//user submission event
+            const data = {//package into an object for quick access on the server
+                img: $('#img').val(),
+                x: $('#xloc').val(),
+                y: $('#yloc').val(),
+                height: $('#height').val(),
+                width: $('#width').val()
+            }
+            socket.emit('coord', data);//this is most likely why we are getting a repitition of the same last image and coords
+        });
+       socket.on('update', (latest) => {//live update show with the creation of a new h2 element
+        let img = document.createElement('img');
+        img.src = `uploads/${latest.img}`;
+        img.style.left = `${Number(latest.x)}px`;
+        img.style.top = `${Number(latest.y)}px`;
+        document.getElementById('board').appendChild(img);
+        document.getElementById('change').innerHTML = latest;
+       });
+        //socket.emit('coords', `X:${xloc} Y:${yloc}`);
+    </script>
+</body>
+</html>
