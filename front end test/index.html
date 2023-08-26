@@ -16,14 +16,16 @@
         }
         canvas {
             border: 1px solid black;
-            background-image: url('bakdrop.jpg');
+            background-image: url('backdrop.jpg');
+            background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
+            /*
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100%;*/
         }
         .bottom-bar {
             position: absolute;
@@ -46,9 +48,11 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="board"></canvas>
     <div class="bottom-bar">
+        <input type="file" accept="image/*" id="img">
         <a href="#" id="menuLink">Menu</a>
+        <p id='change'>Coordinates</p>
     </div>
     
     <!-- Pop-up Container -->
@@ -61,31 +65,6 @@
         </div>
     </div>
     
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const canvasWidth = 1920;
-        const canvasHeight = 1000;
-    
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-    
-        const canvasState = [];
-    
-        function renderCanvas() {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    
-            for (const cell of canvasState) {
-                const { x, y, imageSrc } = cell;
-                const image = new Image();
-                image.src = imageSrc;
-                image.onload = () => {
-                    ctx.drawImage(image, x, y);
-                };
-            }
-        }
-    
-        renderCanvas();
-    </script>
+    <script src="single.js" async defer></script>
 </body>
 </html>
