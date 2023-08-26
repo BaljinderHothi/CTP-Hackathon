@@ -38,7 +38,6 @@ The install and install process is located here [Node](https://nodejs.org/en/dow
 
 Once you have finished this installation process, visit the Have Nodejs and Mongodb section
 
-## Have Nodejs and Mongodb
 
 
 
@@ -48,7 +47,6 @@ The installation process for MongoDB is located here [mongo](https://www.mongodb
 
 Once you have finished this installation process, visit the Have Nodejs and Mongodb section
 
-## Have Nodejs and Mongodb
 
 
 
