@@ -38,26 +38,26 @@ The install and install process is located here [Node](https://nodejs.org/en/dow
 
 Once you have finished this installation process
 
-Visit:  Starting up the page through local host
+Visit:  ## Have Nodejs and Mongodb
 
 
 
 
 ## No Mondodb But Have Node
-The installation process for MongoDB is located here
+The installation process for MongoDB is located here [mongo](https://www.mongodb.com/docs/manual/installation/)
 
 Once you have finished this installation process
 
-Visit:  Starting up the page through local host
+Visit:  ## Have Nodejs and Mongodb
 
 
 
 
 ## Neither
-The install and install process is located here for NodeJS. NPM comes packaged with it as well
+The install and install process is located here [Node](https://nodejs.org/en/download) for NodeJS. NPM comes packaged with it as well
 
-The installation process for MongoDB is located here
+The installation process for MongoDB is located here [mongo](https://www.mongodb.com/docs/manual/installation/)
 
 Once you have finished this installation process
 
-Visit:  Starting up the page through local host
+Visit:  ## Have Nodejs and Mongodb
